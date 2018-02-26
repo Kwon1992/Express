@@ -1,0 +1,24 @@
+Express는 외부 library 이므로 우선 install을 해주어야 한다.
+npm install --save express
+
+이후 npm init을 하면 package.json이 생긴다.
+
+{
+  "name": "express",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.16.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
+
+
+dependencies에서 "^4.16.2" 에서 ^는 4.16.2보다 상위버젼이 나오게 되면 해당 버젼을 받겠다는 이미이다.
+따라서, 호환성을 최대한 유지하기 위해서는 ^를 지우면 아무리 4.16.2보다 상위버젼이 나오더라도 4.16.2가 설치된다.
