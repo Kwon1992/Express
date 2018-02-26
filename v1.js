@@ -8,7 +8,7 @@ const data = {
 
 // param을 이용한 lang 찾기
 router.get('/:greeting/:lang', (req, res)=>{ // / 뒤에 오는   것을 greeting이라는 param으로 받아준다.
-    // ":greeting"을하면 req.params시  { "greeting" : "value" } 를 반환한다.
+    // ":greeting"을하면 req.params 시  { "greeting" : "greeting에 해당하는 url이 value로 들어감" }
     const greet = data[req.params['greeting']];
     const lang = req.params['lang'];
 
