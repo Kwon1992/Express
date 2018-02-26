@@ -1,6 +1,6 @@
 const http = require("http");
-const fs = require('fs');
-const login = fs.readFileSync('./public/login.html', 'UTF-8');
+// const fs = require('fs');
+// const login = fs.readFileSync('./public/login.html', 'UTF-8');
 
 let express = require("express"); // package.json의 dependencies를 참조하여 express를 찾게 된다.
 let bodyParser = require('body-parser');
@@ -36,6 +36,9 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json()); // application/json
 app.use(cookieParser());
 
+app.use(express.static('public'));
+app.use('/image', express.static('images'));
+
 app.use('/v1', v1Router); // v1으로 들어온 url에 대해 v1Router를 사용하겠다는 의미.
 
 app.get('/cookie', (req, res) => {
@@ -45,7 +48,7 @@ app.get('/cookie', (req, res) => {
     res.cookie("string", "123123", {expires: new Date(Date.now() + 900000)}); // cookie(name, value, options);
     res.send("cookie set");
     // cookie를 set할 때는 그냥 res 사용,
-    // cookie를 읽어서 사용해야하는 경우에는 cookie - parser를 사용.
+    // cookie를 읽어서 사용해야하는 경우에는 cookie  -
 });
 
 
@@ -59,7 +62,7 @@ app.all("/", (req, res) => {
 // '/'가 url로 들어왔을 때. (default url)
 
 app.get("/login", (req, res) => {
-    res.send(login);
+    res.redirect('/login.html');
 });
 // login url과 함께 request method가 get으로 들어왔을 때.
 
