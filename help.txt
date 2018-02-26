@@ -22,3 +22,5 @@ npm install --save express
 
 dependencies에서 "^4.16.2" 에서 ^는 4.16.2보다 상위버젼이 나오게 되면 해당 버젼을 받겠다는 이미이다.
 따라서, 호환성을 최대한 유지하기 위해서는 ^를 지우면 아무리 4.16.2보다 상위버젼이 나오더라도 4.16.2가 설치된다.
+
+body-parser, cookie-parser 등에 대해서도 npm install --save를 해주어야한다.

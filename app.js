@@ -3,8 +3,8 @@ const http = require("http");
 // const login = fs.readFileSync('./public/login.html', 'UTF-8');
 
 let express = require("express"); // package.json의 dependencies를 참조하여 express를 찾게 된다.
-let bodyParser = require('body-parser');
-let cookieParser = require('cookie-parser');
+let bodyParser = require('body-parser'); // req에 딸려오는 body를 객체로 알아서 변환해줌.
+let cookieParser = require('cookie-parser'); // req에 딸려오는 cookie를 객체로 알아서 변환해줌.
 let app = express();
 
 const v1Router = require('./v1.js'); // module.exports로 지정된 객체 반환.
@@ -25,10 +25,14 @@ const v1Router = require('./v1.js'); // module.exports로 지정된 객체 반�
 // });
 
 // content-type에 따라서 달라진다...
+// app.use -> 미들웨어를 사용하겠다.
+
 // app.use(bodyParser.raw()); // image 등..
 // app.use(bodyParser.text()); // text
 
 
+
+// 모든 url에 대해서 middle ware를 사용하겠다고 지정할 수 있다.
 app.use(bodyParser.urlencoded({extended: false}));
 // application/urlencoded, option을 넣으려면 param내에 객체를 보낸다.
 // urlencoded를 사용하면 해당 부분을 객체로 만들어서 관리하기 편하게 해준다.
@@ -37,6 +41,8 @@ app.use(bodyParser.json()); // application/json
 app.use(cookieParser());
 
 app.use(express.static('public'));
+
+// 특정 url에 대하여 middle ware를 사용하겠다고 지정할 수 있다.
 app.use('/image', express.static('images'));
 
 app.use('/v1', v1Router); // v1으로 들어온 url에 대해 v1Router를 사용하겠다는 의미.
@@ -54,6 +60,7 @@ app.get('/cookie', (req, res) => {
 
 // our_link :: http://localhost:4000/
 
+// router 지정.
 // all에 쓰는것은 지양해야하지만 연습을 위해 우선... (( 뒤에 따라오는 함수가 일종의 middle-ware이다. ))
 app.all("/", (req, res) => {
     console.log(req.cookies);
@@ -62,7 +69,7 @@ app.all("/", (req, res) => {
 // '/'가 url로 들어왔을 때. (default url)
 
 app.get("/login", (req, res) => {
-    res.redirect('/login.html');
+    res.redirect('/login.html'); // Express에 의해 간단하게 redirect가 가능하다.
 });
 // login url과 함께 request method가 get으로 들어왔을 때.
 
@@ -83,6 +90,8 @@ app.post("/login", (req, res) => {
 });
 // login url과 함께 request method가 post로 들어왔을 때.
 
+
+// error middle wae 지정 (제일 마지막에 !!)
 app.use((err, req, res, next) => {
 
 });
@@ -95,3 +104,5 @@ const server = http.createServer(app); // Server 생성
 server.listen(4000, () => {
     console.log('server is on');
 });
+
+// 간단하게 app.listen(4000 , ()=> {} ); 이런식으로도 할 수 있다.
